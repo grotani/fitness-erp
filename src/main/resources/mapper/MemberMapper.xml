@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--
+============================================
+ 	MemberMapper.xml (SQL 모음 파일)
+============================================
+
+✔ 이 파일은 MemberMapper 인터페이스와 연결되는 SQL 파일이다.
+
+✔ 역할:
+   - DB에 전달할 SQL문을 작성하는 곳
+   - SELECT / INSERT / UPDATE / DELETE 정의
+
+✔ 연결 방식:
+   - namespace = 인터페이스의 full class name
+   - <select id="메서드명"> = 인터페이스 메서드명과 동일해야 함
+
+============================================
+-->
+
+<mapper namespace="com.fitness.erp.mapper.MemberMapper">
+
+    <!-- 단일 회원 조회 -->
+    <select id="selectMember" parameterType="long"
+            resultType="com.fitness.erp.domain.Member">
+        SELECT
+            member_id   AS memberId,
+            name,
+            gender,
+            birth_date  AS birthDate,
+            phone,
+            status,
+            created_at  AS createdAt,
+            updated_at  AS updatedAt
+        FROM member
+        WHERE member_id = #{memberId}
+    </select>
+
+
+    <!-- 전체 회원 조회 -->
+    <select id="selectMembers"
+            resultType="com.fitness.erp.domain.Member">
+        SELECT
+            member_id   AS memberId,
+            name,
+            gender,
+            birth_date  AS birthDate,
+            phone,
+            status,
+            created_at  AS createdAt,
+            updated_at  AS updatedAt
+        FROM member
+        ORDER BY member_id
+    </select>
+
+
+    <!-- 회원 등록 -->
+    <insert id="insertMember"
+            parameterType="com.fitness.erp.domain.Member">
+        INSERT INTO member (
+            name, gender, birth_date, phone, status
+        )
+        VALUES (
+            #{name},
+            #{gender},
+            #{birthDate},
+            #{phone},
+            'ACTIVE'
+        )
+    </insert>
+
+
+    <!-- 회원 정보 수정 -->
+    <update id="updateMember"
+            parameterType="com.fitness.erp.domain.Member">
+        UPDATE member
+        SET
+            name       = #{name},
+            gender     = #{gender},
+            birth_date = #{birthDate},
+            phone      = #{phone},
+            status     = #{status}
+        WHERE member_id = #{memberId}
+    </update>
+
+
+    <!-- 회원 삭제 -->
+    <delete id="deleteMember" parameterType="long">
+        DELETE FROM member
+        WHERE member_id = #{memberId}
+    </delete>
+
+</mapper>
