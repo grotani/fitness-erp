@@ -12,7 +12,7 @@ import java.util.List;
 public class MemberService {
 	
 	// DB 접근 담당 Mapper 주입
-	// 커밋테스트ㅇㅇㅇㅇ
+	// 
 	private final MemberMapper memberMapper;
 	
 	public List<Member> getMembers() {
